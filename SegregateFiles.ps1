@@ -26,6 +26,7 @@ if (-not $SilentMode) {
     $SilentMode = -not ($silentChoice -match "^[Nn]")
 }
 
+# Takes Source Path Input
 while ($true) {
     $inputPath = Read-Host "Enter source path (press Enter twice to finish, '.' for current directory)" 
     if ($inputPath -eq "") {
@@ -40,6 +41,7 @@ while ($true) {
     Write-Host "Added Path to SourceList: $inputPath"
 }
 
+# If Source Path is Empty, then Defaults to whole system
 if (-not $SourcePath) {
     $temp= @(Get-PSDrive -PSProvider FileSystem | ForEach-Object { $_.Root })
     $SourcePath = $temp.Split(' ')
