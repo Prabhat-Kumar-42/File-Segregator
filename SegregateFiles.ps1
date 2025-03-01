@@ -1,11 +1,9 @@
 # PowerShell Script to Segregate PDF, DOCX, PPT, and Image Files
 
-param (
-    [string[]]$SourcePath = @(),
-    [string]$DestinationPath = "",
-    [string]$Action = "",
-    [switch]$SilentMode
-)
+[string[]]$SourcePath = @()
+[string]$DestinationPath = ""
+[string]$Action = ""
+[switch]$SilentMode = $true
 
 # Default settings message
 function Show-Defaults {
@@ -21,10 +19,8 @@ function Show-Defaults {
 Show-Defaults
 
 # Ask user if they want silent mode if not provided as argument
-if (-not $SilentMode) {
-    $silentChoice = Read-Host "Enable silent mode? (Y/n) [Default: Y]"
-    $SilentMode = -not ($silentChoice -match "^[Nn]")
-}
+$silentChoice = Read-Host "Enable silent mode? (Y/n) [Default: Y]"
+$SilentMode = -not ($silentChoice -match "^[Nn]")
 
 # Takes Source Path Input
 while ($true) {
@@ -114,17 +110,17 @@ Write-Host "Destination Path: $DestinationPath"
 # Process files
 foreach ($path in $SourcePath) {
     try {
-        if (-not $SilentMode) {
-            Write-Host "Scanning: $path" -ForegroundColor Blue
-        }
+        #if (-not $SilentMode) {
+            # Write-Host "Scanning: $path" -ForegroundColor Blue
+        #}
 
         # Scan files
         Get-ChildItem -Path $path -Recurse -File -ErrorAction SilentlyContinue | ForEach-Object {
             $file = $_
             $fileDir = $file.DirectoryName
-            if (-not $SilentMode) {
-                Write-Host "Scanning: $fileDir" -ForegroundColor Blue
-            }
+            #if (-not $SilentMode) {
+             #   Write-Host "Scanning: $fileDir" -ForegroundColor Blue
+            #}
 
             try {
                 # Check file category and process accordingly
